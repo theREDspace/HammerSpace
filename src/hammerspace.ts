@@ -1,3 +1,1 @@
-export let hammerspace = {
-   nameOfTheGame: 'hammerspace'
-}
+export * from './client/client';
