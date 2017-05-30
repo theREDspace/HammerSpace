@@ -14,6 +14,6 @@ module.exports = {
     ]
   },
   plugins: [
-      new TypedocWebpackPlugin({})
+    new TypedocWebpackPlugin({})
   ]
 };
