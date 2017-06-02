@@ -14,6 +14,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new TypedocWebpackPlugin({})
+    new TypedocWebpackPlugin({
+      hideGenerator: true,
+      'exclude': '**/*.spec.ts'
+    }, './src')
   ]
 };
