@@ -9,9 +9,18 @@ module.exports = {
     extensions: ['.ts']
   },
   module: {
-    loaders: [
-      { test: /.ts$/, loader: 'awesome-typescript-loader' }
-    ]
+    rules: [{ 
+      test: /.ts$/, 
+      enforce: 'pre', 
+      loader: "tslint-loader",
+      options: {
+        configFile: 'tslint.json',
+        typeCheck: true
+      }
+    },{ 
+      test: /.ts$/, 
+      loader: 'awesome-typescript-loader' 
+    }]
   },
   plugins: [
     new TypedocWebpackPlugin({
