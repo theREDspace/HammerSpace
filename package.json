@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
+    "build:dev": "npm run build",
+    "build:prod": "karma start && NODE_ENV=prod npm run build",
     "test": "karma start"
   },
   "repository": {
@@ -31,6 +33,7 @@
     "typedoc": "~0.7.1",
     "typedoc-webpack-plugin": "~1.1.4",
     "typescript": "~2.3.3",
+    "uglifyjs-webpack-plugin": "~0.4.3",
     "webpack": "~2.6.0"
   }
 }

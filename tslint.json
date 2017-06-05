@@ -23,6 +23,7 @@
     "no-duplicate-super": true,
     "no-duplicate-variable": true,
     "no-empty": true,
+    "no-any": true,
     "no-eval": true,
     "no-invalid-this": true,
     "no-null-keyword": true,
