@@ -1,10 +1,21 @@
+var path = require("path");
 var TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
+var bundle = 'dist/hammerspace';
+var bundleMin = 'dist/hammerspace.min'
+
 module.exports = {
-  entry: './src/main.ts',
+  entry: {
+    [bundle]: './src/main.ts',
+    [bundleMin]: './src/main.ts'
+  },
   output: {
-    filename: './dist/bundle.js'
+    path: path.resolve(__dirname, './'),
+    filename: '[name].js',
+    library: 'Hammer',
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
   resolve: {
     extensions: ['.ts']
@@ -27,11 +38,7 @@ module.exports = {
     new TypedocWebpackPlugin({
       hideGenerator: true,
       'exclude': '**/*.spec.ts'
-    }, './src')
+    }, './src'),
+    new UglifyJSPlugin({include: [ bundleMin ]})
   ]
 };
-
-if (process.env.NODE_ENV === 'prod') {
-  module.exports.output.filename = './dist/bundle.min.js'
-  module.exports.plugins.push(new UglifyJSPlugin());
-}

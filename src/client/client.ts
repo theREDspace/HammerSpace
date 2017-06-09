@@ -7,7 +7,7 @@ export class Client {
    * @property {Object} events
    * @private
    */
-  private events: ClientEvents | undefined = {
+  private _events: ClientEvents | undefined = {
     blur: undefined,
     focus: undefined,
     pause: undefined,
@@ -26,12 +26,12 @@ export class Client {
   private _on(eventName: string, cb: () => void): void {
     const name = eventName.toLowerCase();
 
-    if (typeof this.events === 'undefined' || !this.events.hasOwnProperty(name)) {
+    if (typeof this._events === 'undefined' || !this._events.hasOwnProperty(name)) {
       return;
     }
 
-    if (typeof this.events[name] === 'undefined') {
-      this.events[name] = cb;
+    if (typeof this._events[name] === 'undefined') {
+      this._events[name] = cb;
     }
   }
 
@@ -45,12 +45,12 @@ export class Client {
   private _off(eventName: string): void {
     const name = eventName.toLowerCase();
 
-    if (typeof this.events === 'undefined') {
+    if (typeof this._events === 'undefined') {
       return;
     }
 
-    if (typeof this.events[name] !== 'undefined') {
-      this.events[name] = undefined;
+    if (typeof this._events[name] !== 'undefined') {
+      this._events[name] = undefined;
     }
   }
 
@@ -64,12 +64,12 @@ export class Client {
   private _dispatch(eventName: string): void {
     const name = eventName.toLowerCase();
 
-    if (typeof this.events === 'undefined') {
+    if (typeof this._events === 'undefined') {
       return;
     }
 
-    if (typeof this.events[name] !== 'undefined') {
-      this.events[name]();
+    if (typeof this._events[name] !== 'undefined') {
+      this._events[name]();
     }
   }
 
@@ -79,7 +79,7 @@ export class Client {
    * @method _destroy
    */
   private _destroy(): void {
-    this.events = undefined;
+    this._events = undefined;
   }
 
   /**
