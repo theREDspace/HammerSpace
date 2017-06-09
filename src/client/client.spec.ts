@@ -10,7 +10,7 @@ describe("Client:", () => {
   describe("the basic use of this", () => { 
     it("should have created a client", () => {
       expect(client).toBeDefined();
-      expect(client.events.focus).toBe(undefined);
+      expect(client._events.focus).toBe(undefined);
     });
 
     it("should be able to set an on event", () => {
@@ -22,8 +22,8 @@ describe("Client:", () => {
         return 200;
       });
 
-      expect(client.events.focus).toBeDefined();
-      expect(client.events.focus()).toBe(100);
+      expect(client._events.focus).toBeDefined();
+      expect(client._events.focus()).toBe(100);
     });
 
     it("should not be able to set an unauthorized event", () => {    
@@ -31,7 +31,7 @@ describe("Client:", () => {
         return 100;
       });
 
-      expect(client.events.hasOwnProperty('notanevent')).toBe(false);
+      expect(client._events.hasOwnProperty('notanevent')).toBe(false);
     });
 
     it("should not be able to set an event after destroying client", () => {    
@@ -43,7 +43,7 @@ describe("Client:", () => {
 
       client.off('focus');
 
-      expect(client.events).toBe(undefined);
+      expect(client._events).toBe(undefined);
     });
 
     it("should be able to dispatch an event", () => {   
@@ -51,7 +51,7 @@ describe("Client:", () => {
         return 100;
       });
 
-      expect(client.events.focus).toBeDefined();
+      expect(client._events.focus).toBeDefined();
       client.dispatch('focus');
     });
 
@@ -64,7 +64,7 @@ describe("Client:", () => {
 
       client.dispatch('focus');
 
-      expect(client.events).toBe(undefined);
+      expect(client._events).toBe(undefined);
     });
 
     it("should not be able to dispatch an unauthorized event", () => {   
@@ -72,7 +72,7 @@ describe("Client:", () => {
         return 100;
       });
 
-      expect(client.events.hasOwnProperty('notanevent')).toBe(false);
+      expect(client._events.hasOwnProperty('notanevent')).toBe(false);
       client.dispatch('notanevent');
     });
 
@@ -85,19 +85,19 @@ describe("Client:", () => {
         return 100;
       });
 
-      expect(client.events.blur).toBeDefined();
-      expect(client.events.focus).toBeDefined();
+      expect(client._events.blur).toBeDefined();
+      expect(client._events.focus).toBeDefined();
 
       client.off('focus');
  
-      expect(client.events.blur).toBeDefined();
-      expect(client.events.focus).toBe(undefined);
+      expect(client._events.blur).toBeDefined();
+      expect(client._events.focus).toBe(undefined);
     });
 
     it("should not try to remove an event that doesnt exist", () => {     
       client.off('notanevent');
  
-      expect(client.events.hasOwnProperty('notanevent')).toBe(false);
+      expect(client._events.hasOwnProperty('notanevent')).toBe(false);
     });
 
     it("should be able to destroy all events", () => {    
@@ -105,11 +105,11 @@ describe("Client:", () => {
         return 100;
       });
 
-      expect(client.events.focus).toBeDefined();
+      expect(client._events.focus).toBeDefined();
 
       client.destroy();
 
-      expect(client.events).toBe(undefined);
+      expect(client._events).toBe(undefined);
     });
   });
 });
