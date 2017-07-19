@@ -45,10 +45,10 @@
     "no-trailing-whitespace": true,
     "semicolon": [true, "always"],
     "one-line": [
-      true, 
-      "check-catch", 
-      "check-finally", 
-      "check-else", 
+      true,
+      "check-catch",
+      "check-finally",
+      "check-else",
       "check-open-brace",
       "check-whitespace"
     ]
