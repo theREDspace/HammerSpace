@@ -2,7 +2,7 @@
   "name": "hammerspace",
   "version": "1.0.0",
   "description": "An SDK that allows game developers to hook into a platform that eases game distribution",
-  "main": "index.js",
+  "main": "dist/hammerspace.min.js",
   "scripts": {
     "build": "karma start && webpack --config webpack.config.js",
     "test": "karma start"

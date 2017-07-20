@@ -21,23 +21,23 @@ module.exports = {
     extensions: ['.ts']
   },
   module: {
-    rules: [{ 
-      test: /.ts$/, 
-      enforce: 'pre', 
+    rules: [{
+      test: /.ts$/,
+      enforce: 'pre',
       loader: "tslint-loader",
       options: {
         configFile: 'tslint.json',
         typeCheck: true
       }
-    },{ 
-      test: /.ts$/, 
-      loader: 'awesome-typescript-loader' 
+    },{
+      test: /.ts$/,
+      loader: 'awesome-typescript-loader'
     }]
   },
   plugins: [
     new TypedocWebpackPlugin({
       hideGenerator: true,
-      'exclude': '**/*.spec.ts'
+      'exclude': '{**/*.spec.ts,**/main.ts}'
     }, './src'),
     new UglifyJSPlugin({include: [ bundleMin ]})
   ]
