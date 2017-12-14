@@ -19,38 +19,46 @@ export class Rebound {
 
   /**
    * An object used to keep track of the proper window
-   * @property {Window} reciever
+   * @protected {Window} reciever
    * @private
    */
-  private _reciever: Window;
+  protected _reciever: Window;
 
   /**
    * A boolean that tells you if you are inside the iframe or not
-   * @property {Boolean} isChild
+   * @protected {Boolean} isChild
    * @private
    */
-  private _isChild: boolean;
+  protected _isChild: boolean;
 
   /**
    * A string that contains a random id value used to tell rebound that the
    * events are still from rebound
-   * @property {String} events
-   * @private
+   * @private {String} events
+   * @protected
    */
-  private _randId: string;
+  protected _randId: string;
+
+  protected _isHammerClient: boolean;
 
   /**
    * An object used to keep track of the client instance
    * @property {Object} client
-   * @private
+   * @protected
    */
-  private _client: ClientType;
+  protected _client: ClientType;
 
   constructor() {
     this._isChild = !window.frames.length;
     if (this._isChild) {
       this._randId = 'Rebound_' + (Math.random()).toString();
       this._reciever = parent;
+    }
+  }
+
+  //This is because a constructor should only be setting crucial variables.
+  protected _connect() {
+    if (this._isChild) {
       this.dispatch({event: 'connected', id: this._randId});
     }
     window.addEventListener('message', this._onMessage.bind(this));
@@ -93,11 +101,11 @@ export class Rebound {
    * child of iframe or vise versa and will pass the specified data along with
    * it. Also if there is no random id created it will create on and pass it
    * along
-   * @private
+   * @protected
    * @method _dispatch
    * @param event object that contains event data to be passed with event
    */
-  private _dispatch(e: ReboundEvent) {
+  protected _dispatch(e: ReboundEvent) {
     if (typeof this._reciever === 'undefined') {
       return;
     }
@@ -118,11 +126,11 @@ export class Rebound {
   /**
    * if a proper random id is set and client is also setup a dispatch event will
    * be set to client and the proper data will be passed along
-   * @private
+   * @protected
    * @method _onMessage
    * @param e object that contains the info of a postMessage event from rebound
    */
-  private _onMessage(e: MessageEvent) {
+  protected _onMessage(e: MessageEvent) {
     let data = e.data;
 
     if (typeof data.id === 'undefined' || typeof this._client === 'undefined') {
@@ -158,4 +166,6 @@ export class Rebound {
    * @method dispatch
    */
   public dispatch: (name: ReboundEvent) => void = this._dispatch;
+
+  public connect: () => void = this._connect;
 }

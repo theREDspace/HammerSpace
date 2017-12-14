@@ -166,7 +166,7 @@ export class Client {
    * @public
    * @method addEvents
    */
-  public addEvents: (name: string) => void = this._addEvents;
+  public addEvents: (name: string | string[]) => void = this._addEvents;
 
   /**
    * Calls the private method _destroy
