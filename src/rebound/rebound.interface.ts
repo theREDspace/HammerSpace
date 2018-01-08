@@ -1,3 +1,5 @@
+import { Client } from '../client/client';
+
 export interface ReboundEvent {
   id?: string,
   event: string,
@@ -6,4 +8,10 @@ export interface ReboundEvent {
 
 export interface ReboundType {
   [key: string]: (name: {} | string, data?: string) => void;
+}
+
+export interface ReboundConfig {
+	id: string,
+	client: Client,
+	autoConnect?: boolean
 }

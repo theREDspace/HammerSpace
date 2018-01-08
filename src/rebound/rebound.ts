@@ -1,4 +1,4 @@
-import { ReboundEvent } from './rebound.interface';
+import { ReboundEvent, ReboundConfig } from './rebound.interface';
 import { ClientType } from '../client/client.interface';
 
 export class Rebound {
@@ -48,12 +48,14 @@ export class Rebound {
    */
   protected _client: ClientType;
 
-  constructor() {
+  constructor(config?: ReboundConfig) {
     this._isChild = !window.frames.length;
     if (this._isChild) {
       this._randId = 'Rebound_' + (Math.random()).toString();
       this._reciever = parent;
+      this.dispatch({event: 'connected', id: this._randId});
     }
+    window.addEventListener('message', this._onMessage.bind(this));
   }
 
   /**
