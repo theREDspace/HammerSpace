@@ -56,7 +56,14 @@ export class Rebound {
     }
   }
 
-  //This is because a constructor should only be setting crucial variables.
+  /**
+   * This method creates a connection with the host and starts the message listener
+   * this method should be overridden in case the connect message that is recieved
+   * back is in a different format other than an object. In cases where HammerSpace
+   * is used with a host that is not HammerSpace.
+   * @protected
+   * @method connect
+   */
   protected _connect() {
     if (this._isChild) {
       this.dispatch({event: 'connected', id: this._randId});
@@ -167,5 +174,10 @@ export class Rebound {
    */
   public dispatch: (name: ReboundEvent) => void = this._dispatch;
 
+  /**
+   * Calls the private method _connect
+   * @public
+   * @method connect
+   */
   public connect: () => void = this._connect;
 }
