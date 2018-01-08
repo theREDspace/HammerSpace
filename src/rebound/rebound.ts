@@ -39,8 +39,6 @@ export class Rebound {
    */
   protected _randId: string;
 
-  protected _isHammerClient: boolean;
-
   /**
    * An object used to keep track of the client instance
    * @property {Object} client
