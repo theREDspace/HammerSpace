@@ -1,5 +1,5 @@
 import { ReboundEvent, ReboundConfig } from './rebound.interface';
-import { ClientType } from '../client/client.interface';
+import { Client } from '../client/client';
 
 export class Rebound {
 
@@ -44,11 +44,17 @@ export class Rebound {
    * @property {Object} client
    * @protected
    */
-  protected _client: ClientType;
+  protected _client: Client;
 
   constructor(config?: ReboundConfig) {
     this._isChild = !window.frames.length;
-    if (this._isChild) {
+    if (config.id !== 'undefined') {
+      this._setID(config.id);
+    }
+    if (config.client) {
+      this._setClient(config.client);
+    }
+    if (this._isChild && config.autoConnect) {
       this._randId = 'Rebound_' + (Math.random()).toString();
       this._reciever = parent;
       this.dispatch({event: 'connected', id: this._randId});
@@ -65,14 +71,11 @@ export class Rebound {
    * @method connect
    */
   protected _connect() {
-    if (this._isChild) {
-      this.dispatch({event: 'connected', id: this._randId});
-    }
-    window.addEventListener('message', this._onMessage.bind(this));
+    this.dispatch({event: 'connected', id: this._randId});
   }
 
   /**
-   * If an id is passed in and rebound in currently not in the iframe then it
+   * If an id is passed in and rebound is currently not in the iframe then it
    * will set the id, get the iframe context and the contentWindow while also
    * focusing the iframe
    * @private
@@ -96,7 +99,7 @@ export class Rebound {
    * @method _setClient
    * @param client object that contains reference to the current client
    */
-  private _setClient(client: ClientType) {
+  private _setClient(client: Client) {
     if (typeof client !== 'undefined' && typeof this._client === 'undefined') {
       this._client = client;
       client.setRebound(this);
@@ -165,7 +168,7 @@ export class Rebound {
    * @public
    * @method setClient
    */
-  public setClient: (name: ClientType) => void = this._setClient;
+  public setClient: (name: Client) => void = this._setClient;
 
   /**
    * Calls the private method _dispatch

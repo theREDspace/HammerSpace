@@ -11,7 +11,7 @@ export interface ReboundType {
 }
 
 export interface ReboundConfig {
-	id: string,
-	client: Client,
-	autoConnect?: boolean
+  client: Client,
+  id?: string,
+  autoConnect?: boolean
 }
