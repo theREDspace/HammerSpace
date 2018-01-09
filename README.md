@@ -16,7 +16,7 @@ Hammerspace consists of two components:
 
 ## Rebound
 
-Rebound is the part of HammerSpace that receives the messages, regardless if it is setup on the host or child (iframe). Rebound the relays the
+Rebound is the part of HammerSpace that receives the messages, regardless if it is setup on the host or child (iframe). Rebound then relays the
 message to the Client.
 
 ## Client
