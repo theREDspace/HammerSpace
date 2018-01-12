@@ -1,9 +1,13 @@
 var path = require("path");
 var TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var bundle = 'dist/hammerspace';
-var bundleMin = 'dist/hammerspace.min'
+var bundleMin = 'dist/hammerspace.min';
+
+var dependancyPath = './node_modules/';
+var testEnvironmentPath = dependancyPath + 'hammerspace-test/test.js';
 
 module.exports = {
   entry: {
@@ -39,6 +43,32 @@ module.exports = {
       hideGenerator: true,
       'exclude': '{**/*.spec.ts,**/main.ts}'
     }, './src'),
-    new UglifyJSPlugin({include: [ bundleMin ]})
+    new UglifyJSPlugin({include: [ bundleMin ]}),
+    new HtmlWebpackPlugin({
+      title: 'HammerSpace Test',
+      filename: './test/index.html',
+      template: './src/test/test.html',
+      inject: false
+    })
+  ]
+},{
+  entry: './src/test/test.js',
+  output: {
+    path: path.resolve(__dirname, './'),
+    publicPath: '',
+    filename: 'bundle.js'
+  },
+  module: {
+    loaders: [
+      { test: /\.css$/, loader: 'style-loader!css-loader' }
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'HammerSpace Test',
+      filename: './test/index.html',
+      template: './src/test/test.html',
+      inject: false
+    })
   ]
 };
