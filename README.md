@@ -1,4 +1,7 @@
 # HammerSpace
+
+[![Build Status](https://travis-ci.org/theREDspace/HammerSpace.svg?branch=master)](https://travis-ci.org/theREDspace/HammerSpace)
+
 Hammerspace is an SDK that allows game to communicate to a host site through an iframe, furthermore helps facilitate distribution
 of HTML5 content through an iframe. To allow a seamless and easy
 communication between host and child, HammerSpace can be setup on either the host or the child, however it is also designed to be standalone and used on either side and easily integrate with any platform or library.
