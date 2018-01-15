@@ -1,7 +1,9 @@
 # HammerSpace
 
-[![Build Status](https://travis-ci.org/theREDspace/HammerSpace.svg?branch=master)](https://travis-ci.org/theREDspace/HammerSpace) [![size: kb](http://img.badgesize.io/https://raw.githubusercontent.com/theREDspace/HammerSpace/master/dist/hammerspace.min.js
-?max=10000&softmax=20000)](https://raw.githubusercontent.com/theREDspace/HammerSpace/master/dist/hammerspace.min.js) [![Coverage Status](https://coveralls.io/repos/github/theREDspace/HammerSpace/badge.svg)](https://coveralls.io/github/theREDspace/HammerSpace) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/theREDspace/HammerSpace.svg?branch=master)](https://travis-ci.org/theREDspace/HammerSpace)
+[![File Size](https://img.shields.io/github/size/theREDspace/HammerSpace/dist/hammerspace.min.js.svg)](https://raw.githubusercontent.com/theREDspace/HammerSpace/master/dist/hammerspace.min.js)
+[![Coverage Status](https://coveralls.io/repos/github/theREDspace/HammerSpace/badge.svg)](https://coveralls.io/github/theREDspace/HammerSpace)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 Hammerspace is an SDK that allows game to communicate to a host site through an iframe, furthermore helps facilitate distribution
 of HTML5 content through an iframe. To allow a seamless and easy
