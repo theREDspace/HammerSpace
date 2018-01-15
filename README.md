@@ -1,6 +1,6 @@
 # HammerSpace
 
-[![Build Status](https://travis-ci.org/theREDspace/HammerSpace.svg?branch=master)](https://travis-ci.org/theREDspace/HammerSpace)
+[![Build Status](https://travis-ci.org/theREDspace/HammerSpace.svg?branch=master)](https://travis-ci.org/theREDspace/HammerSpace) [![Coverage Status](https://coveralls.io/repos/github/theREDspace/HammerSpace/badge.svg)](https://coveralls.io/github/theREDspace/HammerSpace)
 
 Hammerspace is an SDK that allows game to communicate to a host site through an iframe, furthermore helps facilitate distribution
 of HTML5 content through an iframe. To allow a seamless and easy
@@ -11,7 +11,7 @@ communication between host and child, HammerSpace can be setup on either the hos
 - HammerSpace used on both the host and iframe
 - HammerSpace used on the host and communicating with any application that is able to intercept messages from HammerSpace
 - HammerSpace used on the iframe to receive communication from any application on the host side
-- To handle communication where there are multiple iframes (web components) and distinguish the communication from each instance 
+- To handle communication where there are multiple iframes (web components) and distinguish the communication from each instance
 
 Hammerspace consists of two components:
 1) Rebound
