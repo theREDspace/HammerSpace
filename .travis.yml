@@ -17,3 +17,5 @@ before_install:
  - sudo dpkg -i google-chrome*.deb
 
 script: npm run build
+
+after_success: 'npm install coveralls; coveralls'

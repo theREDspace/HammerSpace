@@ -5,7 +5,8 @@
   "main": "dist/hammerspace.min.js",
   "scripts": {
     "build": "karma start && webpack --config webpack.config.js",
-    "test": "karma start"
+    "test": "karma start",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
