@@ -18,4 +18,4 @@ before_install:
 
 script: npm run build
 
-after_success: 'npm install coveralls; coveralls'
+after_success: 'npm install coveralls; npm run coveralls'
