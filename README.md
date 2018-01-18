@@ -1,4 +1,4 @@
-# HammerSpace
+<img src="https://raw.githubusercontent.com/theREDspace/HammerSpace/master/docs/assets/images/logo.png" style="display:block; margin:0 auto; width: 400px;"/>
 
 [![Build Status](https://travis-ci.org/theREDspace/HammerSpace.svg?branch=master)](https://travis-ci.org/theREDspace/HammerSpace)
 [![File Size](https://img.shields.io/github/size/theREDspace/HammerSpace/dist/hammerspace.min.js.svg)](https://raw.githubusercontent.com/theREDspace/HammerSpace/master/dist/hammerspace.min.js)
