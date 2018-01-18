@@ -7,11 +7,11 @@
 
 Hammerspace abstracts the PostMessage API and provides an easy to use API in order to handle communication between an iframe and it's parent website. Hammerspace send and intercepts PostMessage API calls and fires a callback assigned to a specific message.
 
-*Why not simply use PostMessage API?*
+**Why not simply use PostMessage API?**
 
 Hammerspace provides functionality that makes handling PostMessage API calls easier, reducing the amount of custom code that a developer would have to write from scratch. It also allows handling multiple instances of iframes and distinguishing the PostMessage API calls.
 
-*Where would this be useful?*
+**Where would this be useful?**
 
 Hammerspace can be useful in distributing any HTML5 content that is embedded in an iframe. This can include but is not limited to:
 
@@ -20,7 +20,7 @@ Hammerspace can be useful in distributing any HTML5 content that is embedded in 
 - Rich Media Advertisements
 - Web widgets/components
 
-*Do I have to use Hammerspace on both the iframe and the host?*
+**Do I have to use Hammerspace on both the iframe and the host?**
 
 No, Hammerspace can be used standalone simply to intercept PostMessage API messages. However, to make the best use of Hammerspace it's optimal when Hammerspace is installed on the host as well as on the iframe. However, Hammerspace was built with the reality that distributed HTML5 content does not have access to the host, therefore Hammerspace can be integrated with any platform that is on the host if it sends PostMessage API messages.
 
@@ -59,26 +59,25 @@ var rebound = new Hammer.Rebound();
 
 Ensure that the `Hammer` object is available in the `Window` context.
 
-1) Add the events that your client will be listening to
+1. Tell rebound the instance of the client, the variable that you assigned your client to
+```
+rebound.setClient(client);
+```
+1. Add the events that your client will be listening to
 ```
 client.addEvents(['event']);
 ```
 
 Notice the `addEvents` method allows for an array of events.
 
-1) Tell rebound the instance of the client, the variable that you assigned your client to
-```
-rebound.setClient(client);
-```
-
-1) Then set the ID, which is the ID attribute of your iframe, if your iframe code is as such: `<iframe src="app.html" id="myiframe"></iframe>`
+1. Then set the ID, which is the ID attribute of your iframe, if your iframe code is as such: `<iframe src="app.html" id="myiframe"></iframe>`
 then to set your id like so:
 
 ```
 rebound.setID('myiframe');
 ```
 
-1) Tell the client the callback to run according to which event it receives
+1. Tell the client the callback to run according to which event it receives
 ```
 client.on('event', function(event) {
   //Do something with the event
