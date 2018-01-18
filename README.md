@@ -9,7 +9,7 @@ Hammerspace abstracts the PostMessage API and provides an easy to use API in ord
 
 *Why not simply use PostMessage API?*
 
-Hammerspace provides functionality that makes handling PostMessage API calls easier, reducing the amount of custom code that a developer would otherwise need to write any way. It also allows handling multiple instances of iframes and distinguishing the PostMessage API calls.
+Hammerspace provides functionality that makes handling PostMessage API calls easier, reducing the amount of custom code that a developer would have to write from scratch. It also allows handling multiple instances of iframes and distinguishing the PostMessage API calls.
 
 *Where would this be useful?*
 
