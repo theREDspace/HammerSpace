@@ -5,11 +5,11 @@
 [![Coverage Status](https://coveralls.io/repos/github/theREDspace/HammerSpace/badge.svg)](https://coveralls.io/github/theREDspace/HammerSpace)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-Hammerspace abstracts the PostMessage API and provides an easy to use API in order to handle communication between an iframe and it's parent website. Hammerspace send and intercepts PostMessage API calls and fires a callback assigned to a specific message.
+Hammerspace abstracts the [PostMessage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) and provides an easy to use API in order to handle communication between an iframe and it's parent website. Hammerspace send and intercepts [PostMessage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) calls and fires a callback assigned to a specific message.
 
 **Why not simply use PostMessage API?**
 
-Hammerspace provides functionality that makes handling PostMessage API calls easier, reducing the amount of custom code that a developer would have to write from scratch. It also allows handling multiple instances of iframes and distinguishing the PostMessage API calls.
+Hammerspace provides functionality that makes handling [PostMessage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) calls easier, reducing the amount of custom code that a developer would have to write from scratch. It also allows handling multiple instances of iframes and distinguishing the [PostMessage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) calls.
 
 **Where would this be useful?**
 
@@ -22,7 +22,7 @@ Hammerspace can be useful in distributing any HTML5 content that is embedded in 
 
 **Do I have to use Hammerspace on both the iframe and the host?**
 
-No, Hammerspace can be used standalone simply to intercept PostMessage API messages. However, to make the best use of Hammerspace it's optimal when Hammerspace is installed on the host as well as on the iframe. However, Hammerspace was built with the reality that distributed HTML5 content does not have access to the host, therefore Hammerspace can be integrated with any platform that is on the host if it sends PostMessage API messages.
+No, Hammerspace can be used standalone simply to intercept [PostMessage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) messages. However, to make the best use of Hammerspace it's optimal when Hammerspace is installed on the host as well as on the iframe. However, Hammerspace was built with the reality that distributed HTML5 content does not have access to the host, therefore Hammerspace can be integrated with any platform that is on the host if it sends [PostMessage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) messages.
 
 ## Use Cases
 
