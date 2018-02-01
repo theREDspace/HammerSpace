@@ -24,7 +24,7 @@ Hammerspace can be useful in distributing any HTML5 content that is embedded in 
 
 **Do I have to use Hammerspace on both the iframe and the host?**
 
-No, Hammerspace can be used standalone to intercept [PostMessage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage). However, the most optimal use of Hammerspace is when it's installed on the host as well as on the iframe. Hammerspace was built with the reality that distributed HTML5 content does not have access to the host, and can therefore be integrated with any platform that is both on the host and sends PostMessage API messages. [PostMessage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) messages.
+No, Hammerspace can be used standalone to intercept [PostMessage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage). However, the most optimal use of Hammerspace is when it's installed on the host as well as on the iframe. Hammerspace was built with the reality that distributed HTML5 content does not have access to the host, and can therefore be integrated with any platform that is both on the host and sends PostMessage API messages.
 
 ## Use Cases
 
@@ -53,7 +53,7 @@ var client = new Hammer.Client();
 var rebound = new Hammer.Rebound();
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ensure that the `Hammer` object is available in the `Window` context.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ensure that the `Hammer` object is available in the `Window` context.
 
 3) Pass the client instance to rebound
 ```
@@ -64,7 +64,7 @@ rebound.setClient(client);
 client.addEvents(['event']);
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Notice the `addEvents` method allows for an array of events.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Notice the `addEvents` method allows for an array of events.
 
 5) Then set the ID, which is the ID attribute of your iframe, if your iframe code is as such: `<iframe src="app.html" id="myiframe"></iframe>`
 then to set your id like so:
@@ -80,7 +80,7 @@ client.on('event', function(event) {
 });
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Or pass a reference to a function
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Or pass a reference to a function
 
 ```
 client.on('event', someFunction);
@@ -90,7 +90,7 @@ function someFunction(event) {
 }
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;When everything is setup properly, the block of code required to use HammerSpace when listening to one event should look like this:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;When everything is setup properly, the block of code required to use HammerSpace when listening to one event should look like this:
 
 ### Host
 ```
