@@ -44,8 +44,6 @@ The Client is the part of HammerSpace that is used to run specific logic accordi
 
 ## Usage
 
-To use hammerspace,
-
 1) Include the HammerSpace library
 2) Instantiate both of the components
 ```
