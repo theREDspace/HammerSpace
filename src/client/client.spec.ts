@@ -2,7 +2,7 @@ import { Client } from './client';
 import { Rebound } from '../rebound/rebound';
 
 describe('Client:', () => {
-  let client: any;
+  let client: Client;
   let rebound: Rebound;
   beforeEach(() => {
     client = new Client();
@@ -79,7 +79,7 @@ describe('Client:', () => {
 
     it('should only be able to add strings as new possible event', () => {
       let numOfKeysBefore = Object.keys(client._events).length;
-      let eventTypes = [1, [], {}, 1.2, undefined, undefined, true];
+      let eventTypes = [1, [], {}, 1.2, undefined, null, true];
 
       expect(client._events.hasOwnProperty('testevent')).toBe(false);
 
