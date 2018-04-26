@@ -5,10 +5,9 @@
     "An SDK that allows game developers to hook into a platform that eases game distribution",
   "main": "dist/hammerspace.min.js",
   "scripts": {
-    "build": "karma start && rollup -c && typedoc",
+    "build": "karma start && rollup -c && npm run doc",
     "test": "karma start",
-    "doc":
-      "typedoc --exclude **/*.spec.ts,**/main.ts,**/*conf.ts --out docs src --entryPoint \"main.ts\""
+    "doc": "typedoc --exclude **/*.spec.ts,**/main.ts,**/*conf.ts --out docs"
   },
   "repository": {
     "type": "git",
@@ -34,6 +33,5 @@
     "tslint": "~5.4.3",
     "typedoc": "~0.7.1",
     "typescript": "~2.3.4"
-  },
-  "dependencies": {}
+  }
 }
