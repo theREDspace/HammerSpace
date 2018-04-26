@@ -1,9 +1,9 @@
 import { Client } from './client';
 import { Rebound } from '../rebound/rebound';
 
-describe("Client:", () => {
+describe('Client:', () => {
   let client: any;
-  let rebound: any;
+  let rebound: Rebound;
   beforeEach(() => {
     client = new Client();
     rebound = new Rebound();
@@ -11,18 +11,18 @@ describe("Client:", () => {
     rebound.setClient(client);
   });
 
-  describe("the basic use of this", () => {
-    it("should have created a client", () => {
+  describe('the basic use of this', () => {
+    it('should have created a client', () => {
       expect(client).toBeDefined();
     });
 
-    it("should not be able to set rebound after setting client", () => {
-      client._rebound._randId = 'test'
+    it('should not be able to set rebound after setting client', () => {
+      client._rebound._randId = 'test';
       client.setRebound();
       expect(client._rebound._randId).toBe('test');
     });
 
-    it("should be able to set an on event", () => {
+    it('should be able to set an on event', () => {
       client.addEvents('focus');
 
       client.on('focus', () => {
@@ -37,7 +37,7 @@ describe("Client:", () => {
       expect(client._events.focus()).toBe(100);
     });
 
-    it("should not be able to set an unauthorized event", () => {
+    it('should not be able to set an unauthorized event', () => {
       client.on('notanevent', () => {
         return 100;
       });
@@ -45,7 +45,7 @@ describe("Client:", () => {
       expect(client._events.hasOwnProperty('notanevent')).toBe(false);
     });
 
-    it("should not be able to set an event after destroying client", () => {
+    it('should not be able to set an event after destroying client', () => {
       expect(client._events).toBeDefined();
 
       client.destroy();
@@ -59,7 +59,7 @@ describe("Client:", () => {
       expect(client._events).toBe(undefined);
     });
 
-    it("should be able to add a single new possible event", () => {
+    it('should be able to add a single new possible event', () => {
       expect(client._events.hasOwnProperty('testevent')).toBe(false);
 
       client.addEvents('testevent');
@@ -67,7 +67,7 @@ describe("Client:", () => {
       expect(client._events.hasOwnProperty('testevent')).toBe(true);
     });
 
-    it("should be able to add multiple new possible event", () => {
+    it('should be able to add multiple new possible event', () => {
       expect(client._events.hasOwnProperty('testevent')).toBe(false);
       expect(client._events.hasOwnProperty('testevent2')).toBe(false);
 
@@ -77,9 +77,9 @@ describe("Client:", () => {
       expect(client._events.hasOwnProperty('testevent2')).toBe(true);
     });
 
-    it("should only be able to add strings as new possible event", () => {
+    it('should only be able to add strings as new possible event', () => {
       let numOfKeysBefore = Object.keys(client._events).length;
-      let eventTypes = [1, [], {}, 1.2, undefined, null, true];
+      let eventTypes = [1, [], {}, 1.2, undefined, undefined, true];
 
       expect(client._events.hasOwnProperty('testevent')).toBe(false);
 
@@ -99,11 +99,13 @@ describe("Client:", () => {
       expect(numOfKeysBefore + 1).toBe(numOfKeysAfter);
     });
 
-    it("should not be able to overwrite a possible event", () => {
+    it('should not be able to overwrite a possible event', () => {
       expect(client._events.hasOwnProperty('testevent')).toBe(false);
 
       client.addEvents('testevent');
-      client.on('testevent', function() {});
+      client.on('testevent', function() {
+        console.log('testevent');
+      });
 
       expect(client._events.hasOwnProperty('testevent')).toBe(true);
       expect(client._events.testevent).toBeDefined();
@@ -113,7 +115,7 @@ describe("Client:", () => {
       expect(client._events.testevent).toBeDefined();
     });
 
-    it("should not be able to add an empty string as a new possible event", () => {
+    it('should not be able to add an empty string as a new possible event', () => {
       expect(client._events.hasOwnProperty('')).toBe(false);
 
       client.addEvents('');
@@ -121,7 +123,7 @@ describe("Client:", () => {
       expect(client._events.hasOwnProperty('')).toBe(false);
     });
 
-    it("should not be able to add a new possible event after destroying client", () => {
+    it('should not be able to add a new possible event after destroying client', () => {
       expect(client._events).toBeDefined();
 
       client.destroy();
@@ -130,7 +132,7 @@ describe("Client:", () => {
       expect(client._events).toBe(undefined);
     });
 
-    it("should be able to dispatch an event", () => {
+    it('should be able to dispatch an event', () => {
       client.addEvents('focus');
 
       client.on('focus', () => {
@@ -141,11 +143,11 @@ describe("Client:", () => {
       client.dispatch('focus');
     });
 
-    it("should not error when not able to dispatch an event", () => {
+    it('should not error when not able to dispatch an event', () => {
       client.dispatch('focus', undefined, true);
     });
 
-    it("should not be able to dispatch an event after destroying client", () => {
+    it('should not be able to dispatch an event after destroying client', () => {
       expect(client._events).toBeDefined();
 
       client.destroy();
@@ -159,7 +161,7 @@ describe("Client:", () => {
       expect(client._events).toBe(undefined);
     });
 
-    it("should not be able to dispatch an unauthorized event", () => {
+    it('should not be able to dispatch an unauthorized event', () => {
       client.on('notanevent', () => {
         return 100;
       });
@@ -168,7 +170,7 @@ describe("Client:", () => {
       client.dispatch('notanevent');
     });
 
-    it("should be able to remove an event", () => {
+    it('should be able to remove an event', () => {
       client.addEvents(['focus', 'blur']);
 
       client.on('blur', () => {
@@ -188,13 +190,13 @@ describe("Client:", () => {
       expect(client._events.focus).toBe(undefined);
     });
 
-    it("should not try to remove an event that doesnt exist", () => {
+    it('should not try to remove an event that doesnt exist', () => {
       client.off('notanevent');
 
       expect(client._events.hasOwnProperty('notanevent')).toBe(false);
     });
 
-    it("should be able to destroy all events", () => {
+    it('should be able to destroy all events', () => {
       client.addEvents('focus');
 
       client.on('focus', () => {

@@ -2,7 +2,6 @@ import { ReboundEvent, ReboundConfig } from './rebound.interface';
 import { Client } from '../client/client';
 
 export class Rebound {
-
   /**
    * A string used to keep track of iframe id that was passed in
    * @property {String}
@@ -19,10 +18,10 @@ export class Rebound {
 
   /**
    * An object used to keep track of the proper window
-   * @protected {Window} reciever
+   * @protected {Window} _receiver
    * @private
    */
-  protected _reciever: Window;
+  protected _receiver: Window;
 
   /**
    * A boolean that tells you if you are inside the iframe or not
@@ -47,17 +46,20 @@ export class Rebound {
   protected _client: Client;
 
   constructor(config?: ReboundConfig) {
-    this._isChild = !window.frames.length;
-    if (config.id !== 'undefined') {
-      this._setID(config.id);
-    }
-    if (config.client) {
-      this._setClient(config.client);
-    }
-    if (this._isChild && config.autoConnect) {
-      this._randId = 'Rebound_' + (Math.random()).toString();
-      this._reciever = parent;
-      this.dispatch({event: 'connected', id: this._randId});
+    if ('undefined' !== typeof config) {
+      this._isChild = !window.frames.length;
+      if ('undefined' !== typeof config.id) {
+        this._setID(config.id);
+      }
+      if ('undefined' !== typeof config.client) {
+        this._setClient(config.client);
+      }
+
+      if (this._isChild && config.autoConnect) {
+        this._randId = 'Rebound_' + Math.random().toString();
+        this._receiver = parent;
+        this.dispatch({ event: 'connected', id: this._randId });
+      }
     }
     window.addEventListener('message', this._onMessage.bind(this));
   }
@@ -71,7 +73,7 @@ export class Rebound {
    * @method connect
    */
   protected _connect() {
-    this.dispatch({event: 'connected', id: this._randId});
+    this.dispatch({ event: 'connected', id: this._randId });
   }
 
   /**
@@ -85,8 +87,8 @@ export class Rebound {
   private _setID(id: string) {
     if (!this._isChild && typeof id !== 'undefined') {
       this._iframeId = id;
-      this._iframe = (<HTMLIFrameElement> document.getElementById(id));
-      this._reciever = this._iframe.contentWindow;
+      this._iframe = <HTMLIFrameElement>document.getElementById(id);
+      this._receiver = this._iframe.contentWindow;
 
       this._iframe.focus();
     }
@@ -116,21 +118,21 @@ export class Rebound {
    * @param event object that contains event data to be passed with event
    */
   protected _dispatch(e: ReboundEvent) {
-    if (typeof this._reciever === 'undefined') {
+    if (typeof this._receiver === 'undefined') {
       return;
     }
 
     if (!this._isChild) {
-      this._reciever.focus();
+      this._receiver.focus();
     }
 
     if (typeof this._randId === 'undefined') {
-      this._randId = 'Rebound_' + (Math.random()).toString();
+      this._randId = 'Rebound_' + Math.random().toString();
     }
 
     e.id = this._randId;
 
-    this._reciever.postMessage(e, '*');
+    this._receiver.postMessage(e, '*');
   }
 
   /**
