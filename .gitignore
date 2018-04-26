@@ -5,4 +5,6 @@ reports
 typings
 out
 typings
+.rpt2_cache
+package-lock.json
 .idea/

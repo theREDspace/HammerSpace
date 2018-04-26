@@ -3,17 +3,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>hammerspace</title>
+	<title>ReboundConfig | hammerspace</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">hammerspace</a>
+					<a href="../index.html" class="title">hammerspace</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -53,124 +53,140 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="globals.html">Globals</a>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/_src_rebound_rebound_interface_.html">&quot;src/rebound/rebound.interface&quot;</a>
+				</li>
+				<li>
+					<a href="_src_rebound_rebound_interface_.reboundconfig.html">ReboundConfig</a>
 				</li>
 			</ul>
-			<h1> hammerspace</h1>
+			<h1>Interface ReboundConfig</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<h1 id="hammerspace">HammerSpace</h1>
-				<p>Hammerspace is an SDK that allows game to communicate to a host site through an iframe, furthermore helps facilitate distribution
-					of HTML5 content through an iframe. To allow a seamless and easy
-				communication between host and child, HammerSpace can be setup on either the host or the child, however it is also designed to be standalone and used on either side and easily integrate with any platform or library.</p>
-				<h2 id="use-cases">Use Cases</h2>
-				<ul>
-					<li>HammerSpace used on both the host and iframe</li>
-					<li>HammerSpace used on the host and communicating with any application that is able to intercept messages from HammerSpace</li>
-					<li>HammerSpace used on the iframe to receive communication from any application on the host side</li>
-					<li>To handle communication where there are multiple iframes (web components) and distinguish the communication from each instance </li>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">ReboundConfig</span>
+					</li>
 				</ul>
-				<p>Hammerspace consists of two components:
-					1) Rebound
-				2) Client</p>
-				<h2 id="rebound">Rebound</h2>
-				<p>Rebound is the part of HammerSpace that receives the messages, regardless if it is setup on the host or child (iframe). Rebound the relays the
-				message to the Client.</p>
-				<h2 id="client">Client</h2>
-				<p>The Client receives the messages from Rebound and fires an assigned callback based on the name of the event and the payload data in the message.
-					The Client can handle as many events as required which are each assigned a callback. The Client is the part of HammerSpace that is used to
-				run specific logic according to events that are received from the host.</p>
-				<h2 id="usage">Usage</h2>
-				<p>To use hammerspace,</p>
-				<p>1) Include the HammerSpace library
-				1) Instantiate both of the components</p>
-				<pre><code>var<span class="hljs-built_in"> client </span>= new Hammer.Client();
-var rebound = new Hammer.Rebound();
-</code></pre><p>Ensure that the <code>Hammer</code> object is available in the <code>Window</code> context.</p>
-				<p>1) Add the events that your client will be listening to</p>
-				<pre><code><span class="hljs-keyword">client</span>.addEvents([<span class="hljs-string">'event'</span>]);
-</code></pre><p>Notice the <code>addEvents</code> method allows for an array of events.</p>
-				<p>1) Tell rebound the instance of the client, the variable that you assigned your client to</p>
-				<pre><code>rebound.setClient(client)<span class="hljs-comment">;</span>
-</code></pre><p>1) Then set the ID, which is the ID attribute of your iframe, if your iframe code is as such: <code>&lt;iframe src=&quot;app.html&quot; id=&quot;myiframe&quot;&gt;&lt;/iframe&gt;</code>
-				then to set your id like so:</p>
-				<pre><code><span class="hljs-selector-tag">rebound</span><span class="hljs-selector-class">.setID</span>(<span class="hljs-string">'myiframe'</span>);
-</code></pre><p>1) Tell the client the callback to run according to which event it receives</p>
-				<pre><code>client.on(<span class="hljs-string">'event'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> </span>{
-  <span class="hljs-comment">//Do something with the event</span>
-});
-</code></pre><p>Or pass a reference to a function</p>
-				<pre><code>client.on(<span class="hljs-string">'event'</span>, someFunction);
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">someFunction</span><span class="hljs-params">(event)</span> </span>{
-    <span class="hljs-comment">//Do something with the event</span>
-}
-</code></pre><p>When everything is setup properly, the block of code required to use HammerSpace when listening to one event, should look like this:</p>
-				<pre><code><span class="hljs-keyword">var</span> client = <span class="hljs-keyword">new</span> <span class="hljs-type">Hammer</span>.Client();
-<span class="hljs-keyword">var</span> rebound = <span class="hljs-keyword">new</span> <span class="hljs-type">Hammer</span>.Rebound();
-
-<span class="hljs-comment">// These events only need to be added if you are listening</span>
-<span class="hljs-comment">// for them with .on otherwise client.on will do nothing</span>
-<span class="hljs-comment">// with all other events</span>
-client.addEvents([<span class="hljs-string">'focus'</span>]);
-rebound.setClient(client);
-
-client.on(<span class="hljs-string">'focus'</span>, proxyHandleFocus);
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">proxyHandleFocus</span></span>(event) {
-  <span class="hljs-comment">// Logic to handle what needs to happen when the game gets</span>
-  <span class="hljs-comment">// focused or loses focus.</span>
-
-  <span class="hljs-comment">// Typically this would be a proxy function that calls the</span>
-  <span class="hljs-comment">// function to pause the update loop and mute audio</span>
-}
-</code></pre><p>To send messages to either the host or the child, use the <code>dispatch</code> method that is available through the client</p>
-				<pre><code><span class="hljs-keyword">client</span>.dispatch(<span class="hljs-string">'event'</span>);
-</code></pre><p>If you are using HammerSpace on both the host and the iframe, the setup is the same on both sides. If you are using HammerSpace on only one side, whether the iframe or the host, the setup is the same.</p>
-			</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_src_rebound_rebound_interface_.reboundconfig.html#autoconnect" class="tsd-kind-icon">auto<wbr>Connect</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_src_rebound_rebound_interface_.reboundconfig.html#client" class="tsd-kind-icon">client</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_src_rebound_rebound_interface_.reboundconfig.html#id" class="tsd-kind-icon">id</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="autoconnect" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> auto<wbr>Connect</h3>
+					<div class="tsd-signature tsd-kind-icon">auto<wbr>Connect<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/theREDspace/HammerSpace/blob/f3a201a/src/rebound/rebound.interface.ts#L16">src/rebound/rebound.interface.ts:16</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="client" class="tsd-anchor"></a>
+					<h3>client</h3>
+					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <a href="../classes/_src_client_client_.client.html" class="tsd-signature-type">Client</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/theREDspace/HammerSpace/blob/f3a201a/src/rebound/rebound.interface.ts#L14">src/rebound/rebound.interface.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="id" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> id</h3>
+					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/theREDspace/HammerSpace/blob/f3a201a/src/rebound/rebound.interface.ts#L15">src/rebound/rebound.interface.ts:15</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_karma_conf_.html">"karma.conf"</a>
+						<a href="../modules/_karma_conf_.html">"karma.conf"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_client_client_.html">"src/client/client"</a>
+						<a href="../modules/_src_client_client_.html">"src/client/client"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_client_client_interface_.html">"src/client/client.interface"</a>
+						<a href="../modules/_src_client_client_interface_.html">"src/client/client.interface"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_client_client_spec_.html">"src/client/client.spec"</a>
+						<a href="../modules/_src_client_client_spec_.html">"src/client/client.spec"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_main_.html">"src/main"</a>
+						<a href="../modules/_src_main_.html">"src/main"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_main_spec_.html">"src/main.spec"</a>
+						<a href="../modules/_src_main_spec_.html">"src/main.spec"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_rebound_rebound_.html">"src/rebound/rebound"</a>
+						<a href="../modules/_src_rebound_rebound_.html">"src/rebound/rebound"</a>
+					</li>
+					<li class="current tsd-kind-external-module">
+						<a href="../modules/_src_rebound_rebound_interface_.html">"src/rebound/rebound.interface"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_rebound_rebound_interface_.html">"src/rebound/rebound.interface"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_rebound_rebound_spec_.html">"src/rebound/rebound.spec"</a>
+						<a href="../modules/_src_rebound_rebound_spec_.html">"src/rebound/rebound.spec"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_src_rebound_rebound_interface_.reboundconfig.html" class="tsd-kind-icon">Rebound<wbr>Config</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_src_rebound_rebound_interface_.reboundconfig.html#autoconnect" class="tsd-kind-icon">auto<wbr>Connect</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_src_rebound_rebound_interface_.reboundconfig.html#client" class="tsd-kind-icon">client</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_src_rebound_rebound_interface_.reboundconfig.html#id" class="tsd-kind-icon">id</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_src_rebound_rebound_interface_.reboundevent.html" class="tsd-kind-icon">Rebound<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_src_rebound_rebound_interface_.reboundtype.html" class="tsd-kind-icon">Rebound<wbr>Type</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -239,7 +255,7 @@ client.on(<span class="hljs-string">'focus'</span>, proxyHandleFocus);
 	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
