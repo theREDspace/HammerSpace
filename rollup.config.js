@@ -7,7 +7,7 @@ export default {
   output: {
     name: 'Hammer',
     file: 'dist/hammerspace.min.js',
-    format: 'iife'
+    format: 'es'
   },
   plugins: [typescript(), uglify()]
 };
