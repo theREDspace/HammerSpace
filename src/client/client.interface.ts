@@ -3,5 +3,9 @@ export interface ClientEvents {
 }
 
 export interface ClientType {
-  [key: string]: (name: {} | string, data?: string, isRebound?: boolean) => void
+  [key: string]: (
+    name: {} | string,
+    data?: string,
+    isRebound?: boolean
+  ) => void;
 }

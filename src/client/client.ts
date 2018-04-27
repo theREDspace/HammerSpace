@@ -1,5 +1,5 @@
 import { ClientEvents } from './client.interface';
-import { ReboundType } from '../rebound/rebound.interface';
+import { Rebound } from '../rebound/rebound';
 
 export class Client {
 
@@ -15,7 +15,7 @@ export class Client {
    * @property {Object} rebound
    * @private
    */
-  private _rebound: ReboundType;
+  private _rebound: Rebound;
 
   /**
    * If eventName is an available event, the cb function will be attached to the
@@ -61,7 +61,7 @@ export class Client {
    * @method _setRebound
    * @param rebound object that references the current copy of rebound
    */
-  private _setRebound(rebound: ReboundType): void {
+  private _setRebound(rebound: Rebound): void {
     if (typeof rebound !== 'undefined' && typeof this._rebound === 'undefined') {
       this._rebound = rebound;
     }
@@ -152,7 +152,7 @@ export class Client {
    * @public
    * @method setRebound
    */
-  public setRebound: (rebound: ReboundType) => void = this._setRebound;
+  public setRebound: (rebound: Rebound) => void = this._setRebound;
 
   /**
    * Calls the private method _dispatch
@@ -166,7 +166,7 @@ export class Client {
    * @public
    * @method addEvents
    */
-  public addEvents: (name: string) => void = this._addEvents;
+  public addEvents: (name: string | string[]) => void = this._addEvents;
 
   /**
    * Calls the private method _destroy
