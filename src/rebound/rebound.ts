@@ -47,13 +47,23 @@ export class Rebound {
   private _client: ClientType;
 
   constructor() {
-    this._isChild = !window.frames.length;
+    this._isChild = window.frames.length <= 0;
     if (this._isChild) {
       this._randId = 'Rebound_' + (Math.random()).toString();
       this._reciever = parent;
       this.dispatch({event: 'connected', id: this._randId});
     }
     window.addEventListener('message', this._onMessage.bind(this));
+  }
+
+  /**
+   * returns the iframe id that was passed in
+   * @private
+   * @method _getID
+   * @returns {string}
+   */
+  private _getID() {
+    return this._iframeId;
   }
 
   /**
@@ -65,13 +75,13 @@ export class Rebound {
    * @param id string that contains the id of the iframe
    */
   private _setID(id: string) {
-    if (!this._isChild && typeof id !== 'undefined') {
-      this._iframeId = id;
-      this._iframe = (<HTMLIFrameElement> document.getElementById(id));
-      this._reciever = this._iframe.contentWindow;
+    if (this._isChild || typeof id === 'undefined') return;
 
-      this._iframe.focus();
-    }
+    this._iframeId = id;
+    this._iframe = (<HTMLIFrameElement> document.getElementById(id));
+    this._reciever = this._iframe.contentWindow;
+
+    this._iframe.focus();
   }
 
   /**
@@ -144,6 +154,13 @@ export class Rebound {
    * @method setID
    */
   public setID: (name: string) => void = this._setID;
+
+  /**
+   * Calls the private method _setID
+   * @public
+   * @method getID
+   */
+  public getID: () => string = this._getID;
 
   /**
    * Calls the private method _setClient

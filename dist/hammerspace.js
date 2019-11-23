@@ -83,7 +83,7 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Client = (function () {
+var Client = /** @class */ (function () {
     function Client() {
         /**
          * An object used to keep track of all of the events
@@ -245,7 +245,7 @@ exports.Client = Client;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Rebound = (function () {
+var Rebound = /** @class */ (function () {
     function Rebound() {
         /**
          * Calls the private method _setID
@@ -253,6 +253,12 @@ var Rebound = (function () {
          * @method setID
          */
         this.setID = this._setID;
+        /**
+         * Calls the private method _setID
+         * @public
+         * @method getID
+         */
+        this.getID = this._getID;
         /**
          * Calls the private method _setClient
          * @public
@@ -265,7 +271,7 @@ var Rebound = (function () {
          * @method dispatch
          */
         this.dispatch = this._dispatch;
-        this._isChild = !window.frames.length;
+        this._isChild = window.frames.length <= 0;
         if (this._isChild) {
             this._randId = 'Rebound_' + (Math.random()).toString();
             this._reciever = parent;
@@ -273,6 +279,15 @@ var Rebound = (function () {
         }
         window.addEventListener('message', this._onMessage.bind(this));
     }
+    /**
+     * returns the iframe id that was passed in
+     * @private
+     * @method _getID
+     * @returns {string}
+     */
+    Rebound.prototype._getID = function () {
+        return this._iframeId;
+    };
     /**
      * If an id is passed in and rebound in currently not in the iframe then it
      * will set the id, get the iframe context and the contentWindow while also
@@ -282,12 +297,12 @@ var Rebound = (function () {
      * @param id string that contains the id of the iframe
      */
     Rebound.prototype._setID = function (id) {
-        if (!this._isChild && typeof id !== 'undefined') {
-            this._iframeId = id;
-            this._iframe = document.getElementById(id);
-            this._reciever = this._iframe.contentWindow;
-            this._iframe.focus();
-        }
+        if (this._isChild || typeof id === 'undefined')
+            return;
+        this._iframeId = id;
+        this._iframe = document.getElementById(id);
+        this._reciever = this._iframe.contentWindow;
+        this._iframe.focus();
     };
     /**
      * if client is defined and has not been already set then set the client and
