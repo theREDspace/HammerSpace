@@ -62,74 +62,101 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="hammerspace">HammerSpace</h1>
-				<p>Hammerspace is an SDK that allows game to communicate to a host site through an iframe, furthermore helps facilitate distribution
-					of HTML5 content through an iframe. To allow a seamless and easy
-				communication between host and child, HammerSpace can be setup on either the host or the child, however it is also designed to be standalone and used on either side and easily integrate with any platform or library.</p>
-				<h2 id="use-cases">Use Cases</h2>
+				<p align="center">
+					<img src="https://raw.githubusercontent.com/theREDspace/HammerSpace/master/docs/assets/images/logo.png" width="400px"/>
+				</p>
+				<p><a href="https://travis-ci.org/theREDspace/HammerSpace"><img src="https://travis-ci.org/theREDspace/HammerSpace.svg?branch=master" alt="Build Status"></a>
+					<a href="https://raw.githubusercontent.com/theREDspace/HammerSpace/master/dist/hammerspace.min.js"><img src="https://img.shields.io/github/size/theREDspace/HammerSpace/dist/hammerspace.min.js.svg" alt="File Size"></a>
+					<a href="https://coveralls.io/github/theREDspace/HammerSpace"><img src="https://coveralls.io/repos/github/theREDspace/HammerSpace/badge.svg" alt="Coverage Status"></a>
+				<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a></p>
+				<p>Hammerspace abstracts the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">PostMessage API</a> and provides an easy to use API in order to handle communication between an iframe and it&#39;s parent website. Hammerspace sends and intercepts <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">PostMessage API</a> calls and fires a callback assigned to a specific message.</p>
+				<p><strong>Why not simply use PostMessage API?</strong></p>
+				<p>Hammerspace provides functionality that makes handling <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">PostMessage API</a> calls easier, reducing the amount of custom code that a developer would have to write. It also allows handling multiple instances of iframes and distinguishing the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">PostMessage API</a> calls.</p>
+				<p><strong>Where would this be useful?</strong></p>
+				<p>Hammerspace can be useful in distributing any HTML5 content that is embedded in an iframe. This can include but is not limited to:</p>
+				<ul>
+					<li>Embeddable content such as videos</li>
+					<li>Web based games</li>
+					<li>Rich media advertisements</li>
+					<li>Web widgets/components</li>
+				</ul>
+				<p><strong>Do I have to use Hammerspace on both the iframe and the host?</strong></p>
+				<p>No, Hammerspace can be used standalone to intercept <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">PostMessage API</a>. However, the most optimal use of Hammerspace is when it&#39;s installed on the host as well as on the iframe. Hammerspace was built with the reality that distributed HTML5 content does not have access to the host, and can therefore be integrated with any platform that is both on the host and sends PostMessage API messages.</p>
+				<a href="#use-cases" id="use-cases" style="color: inherit; text-decoration: none;">
+					<h2>Use Cases</h2>
+				</a>
 				<ul>
 					<li>HammerSpace used on both the host and iframe</li>
 					<li>HammerSpace used on the host and communicating with any application that is able to intercept messages from HammerSpace</li>
 					<li>HammerSpace used on the iframe to receive communication from any application on the host side</li>
-					<li>To handle communication where there are multiple iframes (web components) and distinguish the communication from each instance </li>
+					<li>To handle communication where there are multiple iframes (web components) and distinguish the communication from each instance</li>
 				</ul>
-				<p>Hammerspace consists of two components:
-					1) Rebound
-				2) Client</p>
-				<h2 id="rebound">Rebound</h2>
-				<p>Rebound is the part of HammerSpace that receives the messages, regardless if it is setup on the host or child (iframe). Rebound then relays the
-				message to the Client.</p>
-				<h2 id="client">Client</h2>
-				<p>The Client receives the messages from Rebound and fires an assigned callback based on the name of the event and the payload data in the message.
-					The Client can handle as many events as required which are each assigned a callback. The Client is the part of HammerSpace that is used to
-				run specific logic according to events that are received from the host.</p>
-				<h2 id="usage">Usage</h2>
-				<p>To use hammerspace,</p>
+				<a href="#components" id="components" style="color: inherit; text-decoration: none;">
+					<h2>Components</h2>
+				</a>
+				<p><strong>Rebound</strong></p>
+				<p>Rebound receives PostMessage messages whether it&#39;s setup on the host or the client. Messages can be sent and received from either one.</p>
+				<p><strong>Client</strong></p>
+				<p>The Client is the part of HammerSpace that is used to run specific logic according to events that are received from the host. It receives the messages from Rebound and fires an assigned callback based on the name of the event and the payload data in the message. The Client can handle as many events as required which are each assigned a callback.</p>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
 				<p>1) Include the HammerSpace library
-				1) Instantiate both of the components</p>
+				2) Instantiate both of the components</p>
 				<pre><code>var<span class="hljs-built_in"> client </span>= new Hammer.Client();
-var rebound = new Hammer.Rebound();
-</code></pre><p>Ensure that the <code>Hammer</code> object is available in the <code>Window</code> context.</p>
-				<p>1) Add the events that your client will be listening to</p>
-				<pre><code><span class="hljs-keyword">client</span>.addEvents([<span class="hljs-string">'event'</span>]);
-</code></pre><p>Notice the <code>addEvents</code> method allows for an array of events.</p>
-				<p>1) Tell rebound the instance of the client, the variable that you assigned your client to</p>
-				<pre><code>rebound.setClient(client)<span class="hljs-comment">;</span>
-</code></pre><p>1) Then set the ID, which is the ID attribute of your iframe, if your iframe code is as such: <code>&lt;iframe src=&quot;app.html&quot; id=&quot;myiframe&quot;&gt;&lt;/iframe&gt;</code>
+var rebound = new Hammer.Rebound();</code></pre><p>&nbsp;&nbsp;&nbsp;Ensure that the <code>Hammer</code> object is available in the <code>Window</code> context.</p>
+				<p>3) Pass the client instance to rebound</p>
+				<pre><code>rebound.set<span class="hljs-constructor">Client(<span class="hljs-params">client</span>)</span>;</code></pre><p>4) Add the events that your client will be listening to</p>
+				<pre><code><span class="hljs-keyword">client</span>.addEvents([<span class="hljs-string">'event'</span>]);</code></pre><p>&nbsp;&nbsp;&nbsp;Notice the <code>addEvents</code> method allows for an array of events.</p>
+				<p>5) Then set the ID, which is the ID attribute of your iframe, if your iframe code is as such: <code>&lt;iframe src=&quot;app.html&quot; id=&quot;myiframe&quot;&gt;&lt;/iframe&gt;</code>
 				then to set your id like so:</p>
-				<pre><code><span class="hljs-selector-tag">rebound</span><span class="hljs-selector-class">.setID</span>(<span class="hljs-string">'myiframe'</span>);
-</code></pre><p>1) Tell the client the callback to run according to which event it receives</p>
+				<pre><code><span class="hljs-selector-tag">rebound</span><span class="hljs-selector-class">.setID</span>(<span class="hljs-string">'myiframe'</span>);</code></pre><p>6) Tell the client the callback to run according to which event it receives</p>
 				<pre><code>client.on(<span class="hljs-string">'event'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span> </span>{
   <span class="hljs-comment">//Do something with the event</span>
-});
-</code></pre><p>Or pass a reference to a function</p>
-				<pre><code>client.on(<span class="hljs-string">'event'</span>, someFunction);
+});</code></pre><p>&nbsp;&nbsp;&nbsp;Or pass a reference to a function</p>
+				<pre><code>client.<span class="hljs-keyword">on</span>(<span class="hljs-string">'event'</span>, <span class="hljs-title">someFunction</span>);
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">someFunction</span><span class="hljs-params">(event)</span> </span>{
-    <span class="hljs-comment">//Do something with the event</span>
-}
-</code></pre><p>When everything is setup properly, the block of code required to use HammerSpace when listening to one event, should look like this:</p>
-				<pre><code><span class="hljs-keyword">var</span> client = <span class="hljs-keyword">new</span> <span class="hljs-type">Hammer</span>.Client();
-<span class="hljs-keyword">var</span> rebound = <span class="hljs-keyword">new</span> <span class="hljs-type">Hammer</span>.Rebound();
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">someFunction</span>(<span class="hljs-title">event</span>) {</span>
+   <span class="hljs-comment"> //Do something with the event</span>
+}</code></pre><p>&nbsp;&nbsp;&nbsp;When everything is setup properly, the block of code required to use HammerSpace when listening to one event should look like this:</p>
+				<a href="#host" id="host" style="color: inherit; text-decoration: none;">
+					<h3>Host</h3>
+				</a>
+				<pre><code>var client = <span class="hljs-keyword">new</span> Hammer.<span class="hljs-constructor">Client()</span>;
+var rebound = <span class="hljs-keyword">new</span> Hammer.<span class="hljs-constructor">Rebound()</span>;
 
 <span class="hljs-comment">// These events only need to be added if you are listening</span>
 <span class="hljs-comment">// for them with .on otherwise client.on will do nothing</span>
 <span class="hljs-comment">// with all other events</span>
-client.addEvents([<span class="hljs-string">'focus'</span>]);
-rebound.setClient(client);
 
-client.on(<span class="hljs-string">'focus'</span>, proxyHandleFocus);
+client.add<span class="hljs-constructor">Events(['<span class="hljs-params">focus</span>'])</span>;
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">proxyHandleFocus</span></span>(event) {
+rebound.set<span class="hljs-constructor">Client(<span class="hljs-params">client</span>)</span>;
+rebound.set<span class="hljs-constructor">ID('<span class="hljs-params">myiframe</span>')</span>;
+
+client.on('focus', proxyHandleFocus);
+
+<span class="hljs-keyword">function</span> proxy<span class="hljs-constructor">HandleFocus(<span class="hljs-params">event</span>)</span> {
   <span class="hljs-comment">// Logic to handle what needs to happen when the game gets</span>
   <span class="hljs-comment">// focused or loses focus.</span>
 
   <span class="hljs-comment">// Typically this would be a proxy function that calls the</span>
   <span class="hljs-comment">// function to pause the update loop and mute audio</span>
-}
-</code></pre><p>To send messages to either the host or the child, use the <code>dispatch</code> method that is available through the client</p>
-				<pre><code><span class="hljs-keyword">client</span>.dispatch(<span class="hljs-string">'event'</span>);
-</code></pre><p>If you are using HammerSpace on both the host and the iframe, the setup is the same on both sides. If you are using HammerSpace on only one side, whether the iframe or the host, the setup is the same.</p>
+}</code></pre>
+				<a href="#client" id="client" style="color: inherit; text-decoration: none;">
+					<h3>Client</h3>
+				</a>
+				<pre><code>var<span class="hljs-built_in"> client </span>= new Hammer.Client();
+var rebound = new Hammer.Rebound();
+
+client.addEvents([<span class="hljs-string">'focus'</span>]);
+
+rebound.setClient(client);
+
+client.on(<span class="hljs-string">'focus'</span>, proxyHandleFocus);
+
+function proxyHandleFocus(event) {}</code></pre><p>To send messages to either the host or the child, use the <code>dispatch</code> method that is available through the client</p>
+				<pre><code><span class="hljs-keyword">client</span>.dispatch(<span class="hljs-string">'event'</span>);</code></pre><p>The setup of HammerSpace will always be the same, whether being used on both the host and iFrame, or just one of them.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -139,16 +166,25 @@ client.on(<span class="hljs-string">'focus'</span>, proxyHandleFocus);
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_client_client_.html">"client/client"</a>
+						<a href="modules/_client_client_.html">&quot;client/client&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_client_client_interface_.html">"client/client.interface"</a>
+						<a href="modules/_client_client_interface_.html">&quot;client/client.interface&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_rebound_rebound_.html">"rebound/rebound"</a>
+						<a href="modules/_client_client_spec_.html">&quot;client/client.spec&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_rebound_rebound_interface_.html">"rebound/rebound.interface"</a>
+						<a href="modules/_main_.html">&quot;main&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rebound_rebound_.html">&quot;rebound/rebound&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rebound_rebound_interface_.html">&quot;rebound/rebound.interface&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rebound_rebound_spec_.html">&quot;rebound/rebound.spec&quot;</a>
 					</li>
 				</ul>
 			</nav>
@@ -171,6 +207,7 @@ client.on(<span class="hljs-string">'focus'</span>, proxyHandleFocus);
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>

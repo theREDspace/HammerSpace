@@ -6,7 +6,6 @@ describe("Rebound:", () => {
   let client: any;
   let rebound: any;
   let testIframe: any;
-  let windowSpy: any;
   let testUrl = 'data:text/html;base64,R0lG';
 
   beforeEach((done) => {
@@ -37,6 +36,17 @@ describe("Rebound:", () => {
       expect(rebound._iframeId).toBe(undefined);
       rebound.setID('testIframe');
       expect(rebound._iframeId).toBe('testIframe');
+		});
+
+		it("should not error when getting the iframe id and should be undefined", () => {
+      expect(rebound.getID()).toBe(undefined);
+    });
+
+    it("should get the id of testIframe after setting it", () => {
+			const beforeId = 'testIframe';
+			rebound.setID(beforeId);
+
+      expect(rebound.getID()).toBe(beforeId);
     });
 
     it("should not error when recieving events without a client", () => {
