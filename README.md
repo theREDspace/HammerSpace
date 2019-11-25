@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/theREDspace/HammerSpace/master/docs/assets/images/logo.png" width="400px"/>
+  <img src="https://raw.githubusercontent.com/theREDspace/HammerSpace/gh-pages/logo.png" width="400px"/>
 </p>
 
 [![Build Status](https://travis-ci.org/theREDspace/HammerSpace.svg?branch=master)](https://travis-ci.org/theREDspace/HammerSpace)
