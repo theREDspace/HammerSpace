@@ -1,9 +1,8 @@
-var path = require("path");
-var TypedocWebpackPlugin = require('typedoc-webpack-plugin');
-var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const path = require("path");
+const TerserPlugin = require('terser-webpack-plugin');
 
-var bundle = 'dist/hammerspace';
-var bundleMin = 'dist/hammerspace.min'
+const bundle = 'dist/hammerspace';
+const bundleMin = 'dist/hammerspace.min'
 
 module.exports = {
   entry: {
@@ -33,12 +32,13 @@ module.exports = {
       test: /.ts$/,
       loader: 'awesome-typescript-loader'
     }]
-  },
-  plugins: [
-    new TypedocWebpackPlugin({
-      hideGenerator: true,
-      'exclude': '{**/*.spec.ts,**/main.ts}'
-    }, './src'),
-    new UglifyJSPlugin({include: [ bundleMin ]})
-  ]
+	},
+	optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        include: /.*min.*/,
+      }),
+    ],
+  }
 };

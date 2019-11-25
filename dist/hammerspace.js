@@ -7,7 +7,7 @@
 		exports["Hammer"] = factory();
 	else
 		root["Hammer"] = factory();
-})(this, function() {
+})(window, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -43,18 +43,35 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmony imports with the correct context
-/******/ 	__webpack_require__.i = function(value) { return value; };
-/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -72,12 +89,27 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+__export(__webpack_require__(1));
+__export(__webpack_require__(2));
+
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -92,6 +124,12 @@ var Client = /** @class */ (function () {
          */
         this._events = {};
         /**
+         * Calls the private method _setRebound
+         * @public
+         * @method setRebound
+         */
+        this.setRebound = this._setRebound;
+        /**
          * Calls the private method _on
          * @public
          * @method on
@@ -103,12 +141,6 @@ var Client = /** @class */ (function () {
          * @method off
          */
         this.off = this._off;
-        /**
-         * Calls the private method _setRebound
-         * @public
-         * @method setRebound
-         */
-        this.setRebound = this._setRebound;
         /**
          * Calls the private method _dispatch
          * @public
@@ -137,13 +169,17 @@ var Client = /** @class */ (function () {
      * @param cb function to handle request returns
      */
     Client.prototype._on = function (name, cb) {
-        var invalidName = typeof name === 'undefined';
-        var noEventsObj = typeof this._events === 'undefined';
-        if (noEventsObj || invalidName || !this._events.hasOwnProperty(name)) {
-            return;
+        if (typeof this._events === 'undefined') {
+            return void console.error('client is destroyed');
+        }
+        if (typeof name !== 'string' || !this._events.hasOwnProperty(name)) {
+            return void console.error('client.on was called with an invalid event name');
         }
         if (typeof this._events[name] === 'undefined') {
             this._events[name] = cb;
+        }
+        else {
+            return void console.error('client.on was called with an event name that was already used');
         }
     };
     /**
@@ -180,8 +216,11 @@ var Client = /** @class */ (function () {
      * @param eventName string to specify what event to dispatch
      */
     Client.prototype._dispatch = function (name, data, isRebound) {
-        if (typeof this._events === 'undefined' || typeof name === 'undefined') {
-            return;
+        if (typeof this._events === 'undefined') {
+            return void console.error('client is destroyed');
+        }
+        if (typeof name !== 'string' || name === '') {
+            return void console.error('client.addEvents was called with an invalid value of', name);
         }
         if (typeof this._events[name] !== 'undefined') {
             this._events[name](data);
@@ -198,8 +237,8 @@ var Client = /** @class */ (function () {
      * @param eventName string or array of strings to specify what events to add
      */
     Client.prototype._addEvents = function (name) {
-        if (typeof this._events === 'undefined' || typeof name === 'undefined') {
-            return;
+        if (typeof this._events === 'undefined') {
+            return void console.error('client is destroyed');
         }
         if (Array.isArray(name)) {
             for (var i = 0; i < name.length; i++) {
@@ -219,7 +258,7 @@ var Client = /** @class */ (function () {
      */
     Client.prototype._addToEventsArray = function (name) {
         if (typeof name !== 'string' || name === '') {
-            return;
+            return void console.error('client.addEvents was called with an invalid value of', name);
         }
         if (!this._events.hasOwnProperty(name)) {
             this._events[name] = undefined;
@@ -239,7 +278,7 @@ exports.Client = Client;
 
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -361,20 +400,6 @@ var Rebound = /** @class */ (function () {
     return Rebound;
 }());
 exports.Rebound = Rebound;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-__export(__webpack_require__(0));
-__export(__webpack_require__(1));
 
 
 /***/ })

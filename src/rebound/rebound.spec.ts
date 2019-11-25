@@ -6,19 +6,27 @@ describe("Rebound:", () => {
   let client: any;
   let rebound: any;
   let testIframe: any;
-  let testUrl = 'data:text/html;base64,R0lG';
 
-  beforeEach((done) => {
+  beforeEach(() => {
     testIframe = document.createElement('iframe');
     testIframe.setAttribute('id', 'testIframe');
-    testIframe.setAttribute('src', testUrl);
     document.body.appendChild(testIframe);
 
-    testIframe.onload = () => {
-      client = new Client();
-      rebound = new Rebound();
-      done();
+    document.getElementById = (id: string) => {
+      let el: unknown = {
+        contentWindow: {
+          focus: () => {},
+          postMessage: () => {}
+        },
+        focus: () => {},
+        postMessage: () => {}
+      }
+
+      return <HTMLElement>el
     }
+
+    client = new Client();
+    rebound = new Rebound();
   });
 
   describe("the basic use of this", () => {
@@ -33,18 +41,19 @@ describe("Rebound:", () => {
     });
 
     it("should be able to set the iframe id", () => {
+      rebound._isChild = false;
       expect(rebound._iframeId).toBe(undefined);
       rebound.setID('testIframe');
       expect(rebound._iframeId).toBe('testIframe');
-		});
+    });
 
-		it("should not error when getting the iframe id and should be undefined", () => {
+    it("should not error when getting the iframe id and should be undefined", () => {
       expect(rebound.getID()).toBe(undefined);
     });
 
     it("should get the id of testIframe after setting it", () => {
-			const beforeId = 'testIframe';
-			rebound.setID(beforeId);
+      const beforeId = 'testIframe';
+      rebound.setID(beforeId);
 
       expect(rebound.getID()).toBe(beforeId);
     });
@@ -139,13 +148,14 @@ describe("Rebound:", () => {
 
       rebound.setID('testIframe');
       rebound.setClient(client);
+
       client.addEvents('connected');
-      client.on('connected', (value: any) => {
-        expect(value).toEqual('testvalue');
+      client.on('connected', (data: any) => {
+        expect(data).toEqual('testvalue');
         done();
       })
 
-      let randId = 'Rebound_' + (Math.random()).toString();
+      let randId = 'lukeid';
       let init = {
         data: {
           event: 'connected',

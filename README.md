@@ -73,7 +73,7 @@ rebound.setID('myiframe');
 
 6) Tell the client the callback to run according to which event it receives
 ```
-client.on('event', function(event) {
+client.on('event', (event) => {
   //Do something with the event
 });
 ```
@@ -104,15 +104,14 @@ client.addEvents(['focus']);
 rebound.setClient(client);
 rebound.setID('myiframe');
 
-client.on('focus', proxyHandleFocus);
-
-function proxyHandleFocus(event) {
+client.on('focus', (event) => {
   // Logic to handle what needs to happen when the game gets
   // focused or loses focus.
 
   // Typically this would be a proxy function that calls the
   // function to pause the update loop and mute audio
-}
+});
+
 ```
 
 ### Client
@@ -124,15 +123,14 @@ client.addEvents(['focus']);
 
 rebound.setClient(client);
 
-client.on('focus', proxyHandleFocus);
-
-function proxyHandleFocus(event) {}
-```
-
-To send messages to either the host or the child, use the `dispatch` method that is available through the client
+client.on('focus', (event) => {});
 
 ```
-client.dispatch('event');
+
+To send messages to either the host or the child, use the `dispatch` method that is available through the client and pass in a second param with the data that is wanted to be passed along.
+
+```
+client.dispatch('event', 100);
 ```
 
 The setup of HammerSpace will always be the same, whether being used on both the host and iFrame, or just one of them.

@@ -26,15 +26,18 @@ export class Client {
    * @param cb function to handle request returns
    */
   private _on(name: string, cb: () => void): void {
-    let invalidName = typeof name === 'undefined';
-    let noEventsObj = typeof this._events === 'undefined';
+    if (typeof this._events === 'undefined') {
+      return void console.error('client is destroyed');
+    }
 
-    if (noEventsObj || invalidName || !this._events.hasOwnProperty(name)) {
-      return;
+    if (typeof name !== 'string' || !this._events.hasOwnProperty(name)) {
+      return void console.error('client.on was called with an invalid event name');
     }
 
     if (typeof this._events[name] === 'undefined') {
       this._events[name] = cb;
+    } else {
+      return void console.error('client.on was called with an event name that was already used');
     }
   }
 
@@ -75,8 +78,12 @@ export class Client {
    * @param eventName string to specify what event to dispatch
    */
   private _dispatch(name: string, data: object, isRebound: boolean): void {
-    if (typeof this._events === 'undefined' || typeof name === 'undefined') {
-      return;
+    if (typeof this._events === 'undefined') {
+      return void console.error('client is destroyed');
+    }
+
+    if (typeof name !== 'string' || name === '') {
+      return void console.error('client.addEvents was called with an invalid value of', name);
     }
 
     if (typeof this._events[name] !== 'undefined') {
@@ -94,8 +101,8 @@ export class Client {
    * @param eventName string or array of strings to specify what events to add
    */
   private _addEvents(name: string | string[]): void {
-    if (typeof this._events === 'undefined' || typeof name === 'undefined') {
-      return;
+    if (typeof this._events === 'undefined') {
+      return void console.error('client is destroyed');
     }
 
     if (Array.isArray(name)) {
@@ -116,7 +123,7 @@ export class Client {
    */
   private _addToEventsArray(name: string): void {
     if (typeof name !== 'string' || name === '') {
-      return;
+      return void console.error('client.addEvents was called with an invalid value of', name);
     }
 
     if (!this._events.hasOwnProperty(name)) {
@@ -134,6 +141,13 @@ export class Client {
   }
 
   /**
+   * Calls the private method _setRebound
+   * @public
+   * @method setRebound
+   */
+  protected setRebound: (rebound: ReboundType) => void = this._setRebound;
+
+  /**
    * Calls the private method _on
    * @public
    * @method on
@@ -146,13 +160,6 @@ export class Client {
    * @method off
    */
   public off: (name: string) => void = this._off;
-
-  /**
-   * Calls the private method _setRebound
-   * @public
-   * @method setRebound
-   */
-  public setRebound: (rebound: ReboundType) => void = this._setRebound;
 
   /**
    * Calls the private method _dispatch
